@@ -1,0 +1,52 @@
+﻿<div class="row" style="border:2px solid blue; margin:0 auto; padding:20px; margin-top:5px;">
+    <div class="col-md-2">
+        Name
+    </div>
+    <div class="col-md-10 mb-2">
+        <input type="text" id="txtProductName" class="form-control" placeholder="Enter product Name" />
+    </div>
+    <div class="col-md-2">
+        Price
+    </div>
+    <div class="col-md-10 mb-2">
+        <input type="text" id="txtPrice" class="form-control" placeholder="Enter Price" />
+    </div>
+    <div class="col-md-2">
+        Quantity
+    </div>
+    <div class="col-md-10 mb-2">
+        <input type="number" id="txtQuantity" class="form-control" placeholder="Enter quantity" />
+    </div>
+    <div class="col-md-2">
+        Active:
+    </div>
+    <div class="col-md-10 mb-2">
+        <input type="checkbox" id="btnActive" />
+    </div>
+
+    <div class="col-md-12">
+        <button class="btn btn-primary" onclick="saveProduct()">Save Product</button>
+        <button class="btn btn-danger">Reset</button>
+    </div>
+</div>
+
+<div class="row">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Item Price</th>
+                <th>Item Cost</th>
+                <th>Item Status</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="tbodyProduct"></tbody>
+    </table>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/Product.js"></script>
+
+
