@@ -1,10 +1,13 @@
 ﻿$(document).ready(function () {
     getProducts();
+   
 });
 //add or post product
-function saveProduct() {
-    var url = "/api/Product";
+function addProduct() {
+    //var url = "/api/Product";
     var objectProduct = {};
+    var dynamicUrl = "";
+    var methodName = "";
 
     objectProduct.Name = $('#txtProductName').val();
     objectProduct.Price = $('#txtPrice').val();
@@ -16,16 +19,26 @@ function saveProduct() {
     else {
         objectProduct.Active = 0
     }
-
+    var productId = $("#txtId").val();
+    if (productId) {
+        //update
+        dynamicUrl = "/api/Product/" + productId;
+        methodName = "Put";
+    } else {
+        //save it
+        dynamicUrl = "/api/Product";
+        methodName = "Post";
+    }
     if (objectProduct) {
         $.ajax({
-            url: url,
+            url: dynamicUrl,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(objectProduct),
-            type: "Post",
+            type: methodName,
             success: function (result) {
                 clearFields();
+                $(".label1").hide();
                 //alert(result);
                 getProducts()
             },
@@ -36,12 +49,13 @@ function saveProduct() {
     }
 }
 
-
 //clear fields function
 function clearFields() {
     $('#txtProductName').val('');
     $('#txtPrice').val('');
     $('#txtQuantity').val('');
+    $('#txtId').val('');
+    $('#btnActive').val('');
 }
 
 //get all products
@@ -53,9 +67,6 @@ function getProducts() {
         dataType: "json",
         type: "Get",
         success: function (result) {
-            //alert(result);
-            //alert(JSON.stringify(result));
-
             if (result) {
                 $('#tbodyProduct').html(''); //to only append once from database
                 var row = '';
@@ -66,8 +77,8 @@ function getProducts() {
             + "<td>" + result[i].Price + "</td>"
             + "<td>" + result[i].Quantity + "</td>"
                + "<td>" + result[i].Active + "</td>"
-               + "<td><button class='btn btn-success' onclick='updateProduct(" + result[i].Id + ")'>Edit</button></td>"
-               + "<td><button class='btn btn-danger' onclick='deleteProduct(" + result[i].Id + ")'>Delete</button></td>"
+               + "<td><button class='btn btn-success' id='btnEdit' value='Edit' onclick='updateProduct("+ result[i].Id +")'>Edit</button></td>"
+               + "<td><button class='btn btn-danger' value='Delete' onclick='deleteProduct(" + result[i].Id + ")'>Delete</button></td>"
             + "</tr>";
                 }
         if (row != '') {
@@ -101,29 +112,21 @@ function deleteProduct(id) {
     }
 //update product
 function updateProduct(id) {
+    $(".label1").show();
     var url = "/api/Product/" + id;
-    var objectProduct = {};
 
-    objectProduct.Name = $('#txtProductName').val();
-    objectProduct.Price = $('#txtPrice').val();
-    objectProduct.Quantity = $('#txtQuantity').val();
-    var btnAct = $('#btnActive').is(':checked');
-    if (btnAct) {
-        objectProduct.Active = 1;
-    }
-    else {
-        objectProduct.Active = 0
-    }
-
-    if (objectProduct) {
         $.ajax({
             url: url,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: JSON.stringify(objectProduct),
-            type: "Put",
+            type: "Get",
             success: function (result) {
-                clearFields();
+                $('#txtProductName').val(result.Name);
+                $('#txtPrice').val(result.Price);
+                $('#txtQuantity').val(result.Quantity);
+                $('#btnActive').val(result.Active);
+                $("#txtId").val(result.Id);
+                //clearFields();
                 //alert(result);
                 getProducts()
             },
@@ -131,5 +134,6 @@ function updateProduct(id) {
                 alert(msg);
             }
         });
-    }
+    
 }
+

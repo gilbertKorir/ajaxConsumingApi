@@ -1,21 +1,34 @@
-﻿<div class="row" style="border:2px solid blue; margin:0 auto; padding:20px; margin-top:5px;">
+﻿
+<link href="~/Content/Product.css" rel="stylesheet" />
+
+<div class="row" id="wholeForm" style="border:2px solid blue; margin:0 auto; padding:20px; margin-top:5px;">
+
+    <div class="label1">
+        <div class="col-md-2" id="idlabel">
+            Product Id
+        </div>
+        <div class="col-md-10 mb-2">
+            <input type="text" id="txtId" class="form-control" />
+        </div>
+    </div>
+
     <div class="col-md-2">
         Name
     </div>
     <div class="col-md-10 mb-2">
-        <input type="text" id="txtProductName" class="form-control" placeholder="Enter product Name" />
+        <input type="text" id="txtProductName" class="form-control" placeholder="Enter product Name" required />
     </div>
     <div class="col-md-2">
         Price
     </div>
     <div class="col-md-10 mb-2">
-        <input type="text" id="txtPrice" class="form-control" placeholder="Enter Price" />
+        <input type="text" id="txtPrice" class="form-control" placeholder="Enter Price" required />
     </div>
     <div class="col-md-2">
         Quantity
     </div>
     <div class="col-md-10 mb-2">
-        <input type="number" id="txtQuantity" class="form-control" placeholder="Enter quantity" />
+        <input type="number" id="txtQuantity" class="form-control" placeholder="Enter quantity" required />
     </div>
     <div class="col-md-2">
         Active:
@@ -25,20 +38,21 @@
     </div>
 
     <div class="col-md-12">
-        <button class="btn btn-primary" onclick="saveProduct()">Save Product</button>
-        <button class="btn btn-danger">Reset</button>
+        <button class="btn btn-primary" onclick="addProduct()" id="btnAdd">Add Product</button>
+        @* <button class="btn btn-danger">Reset</button>*@
+        <button class="btn btn-success" id="btnUpdate" onclick="updateProduct()">Update</button>
     </div>
 </div>
 
 <div class="row">
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" id="tbl1">
         <thead>
             <tr>
                 <th>Item Name</th>
                 <th>Item Price</th>
                 <th>Item Cost</th>
                 <th>Item Status</th>
-                <th>Update</th>
+                <th>Edit</th>
                 <th>Delete</th>
             </tr>
         </thead>
