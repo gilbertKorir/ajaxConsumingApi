@@ -66,7 +66,7 @@ function getProducts() {
             + "<td>" + result[i].Price + "</td>"
             + "<td>" + result[i].Quantity + "</td>"
                + "<td>" + result[i].Active + "</td>"
-               + "<td><button class='btn btn-success' onclick='deleteProduct(" + result[i].Id + ")'>Edit</button></td>"
+               + "<td><button class='btn btn-success' onclick='updateProduct(" + result[i].Id + ")'>Edit</button></td>"
                + "<td><button class='btn btn-danger' onclick='deleteProduct(" + result[i].Id + ")'>Delete</button></td>"
             + "</tr>";
                 }
@@ -99,3 +99,37 @@ function deleteProduct(id) {
             }
         });
     }
+//update product
+function updateProduct(id) {
+    var url = "/api/Product/" + id;
+    var objectProduct = {};
+
+    objectProduct.Name = $('#txtProductName').val();
+    objectProduct.Price = $('#txtPrice').val();
+    objectProduct.Quantity = $('#txtQuantity').val();
+    var btnAct = $('#btnActive').is(':checked');
+    if (btnAct) {
+        objectProduct.Active = 1;
+    }
+    else {
+        objectProduct.Active = 0
+    }
+
+    if (objectProduct) {
+        $.ajax({
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(objectProduct),
+            type: "Put",
+            success: function (result) {
+                clearFields();
+                //alert(result);
+                getProducts()
+            },
+            error: function (msg) {
+                alert(msg);
+            }
+        });
+    }
+}
